@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apresentação Haus</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+  <!-- Navegação entre slides -->
+  <div class="fixed top-4 right-4 z-50">
+    <button onclick="prevSlide()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Anterior</button>
+    <button onclick="nextSlide()" class="bg-blue-600 text-white px-4 py-2 rounded">Próximo</button>
+  </div>
+
+  <!-- Slides -->
+  <div id="slides" class="w-full h-screen overflow-hidden relative">
+
+    <!-- Slide 1: Capa -->
+    <div class="slide absolute inset-0 flex items-center justify-center bg-blue-100 text-center" style="display: block;">
+      <div>
+        <h1 class="text-4xl font-bold">Segunda Reunião da Metodologia de Assessoria da Haus (Supernova)</h1>
+        <p class="text-xl mt-4">Estruturação do Plano Estratégico</p>
+      </div>
+    </div>
+
+    <!-- Slide 2: Objetivo -->
+    <div class="slide absolute inset-0 p-12" style="display: none;">
+      <h2 class="text-3xl font-semibold mb-6">Objetivo</h2>
+      <p class="text-xl">Estruturar um plano estratégico alinhado às dores, necessidades e metas do cliente.</p>
+    </div>
+
+    <!-- Slide 3: Plano Financeiro -->
+    <div class="slide absolute inset-0 p-12" style="display: none;">
+      <h2 class="text-3xl font-semibold mb-6">Apresentação do Plano Financeiro Completo</h2>
+      <canvas id="graficoPlano"></canvas>
+    </div>
+
+    <!-- Slide 4: Estratégias de Alocação -->
+    <div class="slide absolute inset-0 p-12" style="display: none;">
+      <h2 class="text-3xl font-semibold mb-6">Definição de Estratégias de Alocação e Diversificação</h2>
+      <textarea id="inputEstrategias" class="w-full h-40 p-4 border rounded" placeholder="Descreva as estratégias..."></textarea>
+      <button onclick="gerarRelatorio()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded">Gerar Relatório</button>
+      <pre id="relatorioOutput" class="mt-6 bg-gray-100 p-4 rounded hidden"></pre>
+    </div>
+
+    <!-- Slide 5: Revisão de Prioridades -->
+    <div class="slide absolute inset-0 p-12 bg-gray-50" style="display: none;">
+      <h2 class="text-3xl font-semibold mb-6">Revisão das Prioridades Financeiras</h2>
+      <img src="template1-imagem-prioridades.png" alt="Imagem de prioridades" class="mx-auto rounded shadow" />
+    </div>
+
+    <!-- Slide 6: Próximos Passos -->
+    <div class="slide absolute inset-0 p-12" style="display: none;">
+      <h2 class="text-3xl font-semibold mb-6">Próximos Passos</h2>
+      <ul class="list-disc list-inside text-lg">
+        <li>Confirmar decisões de alocação</li>
+        <li>Executar as movimentações propostas</li>
+        <li>Agendar a próxima reunião</li>
+      </ul>
+    </div>
+
+    <!-- Slide 7: Encerramento -->
+    <div class="slide absolute inset-0 flex items-center justify-center bg-blue-100 text-center" style="display: none;">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">Encerramento</h2>
+        <p class="text-xl">Obrigado pela participação! Alguma dúvida?</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS para navegação e geração do relatório -->
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => slide.style.display = i === index ? 'block' : 'none');
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function gerarRelatorio() {
+      const texto = document.getElementById('inputEstrategias').value;
+      const relatorio = {
+        data: new Date().toLocaleDateString(),
+        estrategias: texto
+      };
+      document.getElementById('relatorioOutput').textContent = JSON.stringify(relatorio, null, 2);
+      document.getElementById('relatorioOutput').classList.remove('hidden');
+    }
+
+    showSlide(slideIndex);
+  </script>
+
+</body>
+</html>
